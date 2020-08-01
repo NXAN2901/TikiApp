@@ -9,7 +9,6 @@ import androidx.databinding.ViewDataBinding
 abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<out BaseNavigator>> :
     AppCompatActivity() {
 
-    private lateinit var viewModel: V
     private lateinit var viewDataBinding: T
 
     abstract fun initViews()
@@ -24,14 +23,14 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<out BaseNavig
     fun getDataBinding() = viewDataBinding
 
     protected open fun initBindingVariables() {
+        getDataBinding().setVariable(getViewModelVariable(), getViewModel())
         // override to execute other binding here
     }
 
     private fun performDataBinding() {
-        val viewModel = getViewModel()
-        viewDataBinding = (DataBindingUtil.setContentView(this, getLayoutId()) as T).also {binding ->
+        viewDataBinding = DataBindingUtil.setContentView(this, getLayoutId()) as T
+        viewDataBinding.let { binding ->
             binding.lifecycleOwner = this
-            binding.setVariable(getViewModelVariable(), viewModel)
             initBindingVariables()
             binding.executePendingBindings()
         }

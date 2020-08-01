@@ -78,5 +78,6 @@ dependencies {
     // UI
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-rc1'
     implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
 }

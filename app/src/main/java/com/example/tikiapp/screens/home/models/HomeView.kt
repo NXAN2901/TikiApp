@@ -23,3 +23,11 @@ sealed class HomeView {
     ) : HomeView()
 
 }
+
+fun HomeView.getDataList(): List<HomeData>? {
+    return when (this) {
+        is HomeView.HomeQuickLink -> this.dataList
+        is HomeView.HomeBanner -> this.dataList
+        is HomeView.HomeFlashDeal -> this.dataList
+    }
+}

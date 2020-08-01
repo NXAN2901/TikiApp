@@ -5,6 +5,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.tikiapp.screens.home.content.HomeContentAdapter
 import com.example.tikiapp.screens.home.models.HomeView
 
@@ -27,4 +28,10 @@ fun homeData(
             setHomeData(it)
         }
     }
+}
+
+@BindingAdapter(value = ["onRefresh", "isRefreshing"], requireAll = false)
+fun homePullRefresh(swipeRefreshLayout: SwipeRefreshLayout, onRefresh: SwipeRefreshLayout.OnRefreshListener?, isRefreshing: Boolean) {
+    swipeRefreshLayout.isRefreshing = isRefreshing
+    swipeRefreshLayout.setOnRefreshListener(onRefresh)
 }

@@ -1,8 +1,10 @@
 package com.example.tikiapp.screens.home
 
 import android.app.Application
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.tikiapp.common.domain.entity.Banner
 import com.example.tikiapp.common.domain.entity.FlashDeal
 import com.example.tikiapp.common.domain.entity.QuickLink
@@ -15,8 +17,8 @@ import com.example.tikiapp.data.remote.api.response.BannerResponse
 import com.example.tikiapp.data.remote.api.response.FlashDealResponse
 import com.example.tikiapp.data.remote.api.response.QuickLinkResponse
 import com.example.tikiapp.screens.base.BaseViewModel
-import com.example.tikiapp.screens.home.models.HomeData
 import com.example.tikiapp.screens.home.models.HomeView
+import com.example.tikiapp.screens.home.models.getDataList
 import com.example.tikiapp.utils.Mappers
 
 class HomeViewModel(
@@ -27,10 +29,18 @@ class HomeViewModel(
 ) : BaseViewModel<HomeNavigator>(application) {
 
     private val data: MutableList<HomeView> = ArrayList()
-
     private val homeLiveData by lazy { MutableLiveData<List<HomeView>>() }
-    val homeDataTransformation = Transformations.map(homeLiveData) {homeViews ->
+    val homeDataTransformation = Transformations.map(homeLiveData) { homeViews ->
         homeViews.filter { it.getDataList() != null }
+    }
+
+    val refreshing = ObservableBoolean(false)
+
+    val onRefreshing = SwipeRefreshLayout.OnRefreshListener {
+        refreshing.set(true)
+        clearData()
+        fetchData()
+        refreshing.set(false)
     }
 
     fun fetchData() {
@@ -38,6 +48,11 @@ class HomeViewModel(
         data.clear()
         fetchBanner()
         fetchQuickLinks()
+    }
+
+    fun clearData() {
+        data.clear()
+        homeLiveData.postValue(data)
     }
 
     fun fetchFlashDeal() {
@@ -48,7 +63,8 @@ class HomeViewModel(
             APICallback<FlashDealResponse<ArrayList<FlashDeal>>> {
             override fun onResult(result: FlashDealResponse<ArrayList<FlashDeal>>) {
                 data.add(HomeView.HomeFlashDeal().apply {
-                    dataList = result.data?.map { flashDeal -> Mappers.remoteToHomeFlashDeal(flashDeal) }
+                    dataList =
+                        result.data?.map { flashDeal -> Mappers.remoteToHomeFlashDeal(flashDeal) }
                 })
                 homeLiveData.postValue(data)
                 setShowLoading(false)
@@ -71,7 +87,8 @@ class HomeViewModel(
                     for (i in 1 until datas.size) {
                         firstList.addAll(datas[i])
                     }
-                    homeQuickLink.dataList = firstList.map { quickLink -> Mappers.remoteToHomeQuickLink(quickLink) }
+                    homeQuickLink.dataList =
+                        firstList.map { quickLink -> Mappers.remoteToHomeQuickLink(quickLink) }
                 }
                 data.add(homeQuickLink)
                 homeLiveData.postValue(data)
@@ -107,14 +124,6 @@ class HomeViewModel(
     }
 
     private fun unableFetchFlashDeal() = data.size < 2
-
-    fun HomeView.getDataList(): List<HomeData>? {
-        return when(this) {
-            is HomeView.HomeQuickLink  -> this.dataList
-            is HomeView.HomeBanner -> this.dataList
-            is HomeView.HomeFlashDeal -> this.dataList
-        }
-    }
 
     companion object {
         const val POSITION_BANNER = 0
