@@ -10,36 +10,48 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutDescription="@xml/activity_home_scene">
+        android:layout_height="match_parent">
 
-        <com.example.tikiapp.screens.home.header.HeaderView
-            android:id="@+id/headerView"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="250dp"
+            android:background="@color/white">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/content"
-            isRefreshing="@{viewModel.refreshing}"
-            onRefresh="@{viewModel.onRefreshing}"
+            <include layout="@layout/home_header_layout" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/homeContent"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="140dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@id/headerView">
+            android:layout_height="match_parent"
+            app:layoutDescription="@xml/activity_home_scene">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvHomeContent"
-                homeData="@{viewModel.homeDataTransformation}"
-                isShowLoading="@{viewModel.isShowLoading()}"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefresh"
+                isRefreshing="@{viewModel.refreshing}"
+                onRefresh="@{viewModel.onRefreshing}"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="140dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvHomeContent"
+                    homeData="@{viewModel.homeDataTransformation}"
+                    isShowLoading="@{viewModel.isShowLoading()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

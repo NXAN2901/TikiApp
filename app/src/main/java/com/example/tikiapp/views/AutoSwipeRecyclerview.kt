@@ -31,6 +31,11 @@ class AutoSwipeRecyclerview @JvmOverloads constructor(
         autoScroller.sendEmptyMessageDelayed(MSG_SCROLL, delayMillis)
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        pause()
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         resume()

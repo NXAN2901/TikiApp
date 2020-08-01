@@ -1,4 +1,4 @@
-package com.example.tikiapp.screens.home
+package com.example.tikiapp.screens.home.models
 
 enum class HomeItemListType {
     BANNER,

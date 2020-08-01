@@ -1,7 +1,5 @@
 package com.example.tikiapp.screens.home.models
 
-import com.example.tikiapp.screens.home.HomeItemListType
-
 sealed class HomeView {
 
     class HomeBanner(

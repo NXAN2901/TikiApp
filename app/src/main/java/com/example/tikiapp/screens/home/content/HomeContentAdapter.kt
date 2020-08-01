@@ -3,7 +3,7 @@ package com.example.tikiapp.screens.home.content
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tikiapp.screens.home.HomeItemListType
+import com.example.tikiapp.screens.home.models.HomeItemListType
 import com.example.tikiapp.screens.home.models.HomeView
 import com.example.tikiapp.utils.BaseViewItem
 

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.tikiapp.views.CollapsibleToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/homeHeader"
+    android:id="@+id/collapseToolbar"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:paddingLeft="10dp"
-    android:paddingTop="10dp"
-    android:paddingRight="10dp"
-    app:layoutDescription="@xml/view_home_header_scene">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:minHeight="64dp"
+    android:paddingHorizontal="10dp"
+    app:layoutDescription="@xml/toolbar_home_header_scene"
+    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
@@ -40,7 +41,6 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_cart" />
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvBadge"
             android:layout_width="24dp"
@@ -69,4 +69,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flCart" />
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</com.example.tikiapp.views.CollapsibleToolbar>
