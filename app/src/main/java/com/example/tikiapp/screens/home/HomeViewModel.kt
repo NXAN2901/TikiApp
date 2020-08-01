@@ -2,6 +2,7 @@ package com.example.tikiapp.screens.home
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.example.tikiapp.common.domain.entity.Banner
 import com.example.tikiapp.common.domain.entity.FlashDeal
 import com.example.tikiapp.common.domain.entity.QuickLink
@@ -14,9 +15,9 @@ import com.example.tikiapp.data.remote.api.response.BannerResponse
 import com.example.tikiapp.data.remote.api.response.FlashDealResponse
 import com.example.tikiapp.data.remote.api.response.QuickLinkResponse
 import com.example.tikiapp.screens.base.BaseViewModel
+import com.example.tikiapp.screens.home.models.HomeData
 import com.example.tikiapp.screens.home.models.HomeView
 import com.example.tikiapp.utils.Mappers
-import kotlinx.coroutines.Job
 
 class HomeViewModel(
     application: Application,
@@ -27,8 +28,10 @@ class HomeViewModel(
 
     private val data: MutableList<HomeView> = ArrayList()
 
-    val homeLiveData by lazy { MutableLiveData<List<HomeView>>() }
-    val job = Job()
+    private val homeLiveData by lazy { MutableLiveData<List<HomeView>>() }
+    val homeDataTransformation = Transformations.map(homeLiveData) {homeViews ->
+        homeViews.filter { it.getDataList() != null }
+    }
 
     fun fetchData() {
         setShowLoading(true)
@@ -104,6 +107,14 @@ class HomeViewModel(
     }
 
     private fun unableFetchFlashDeal() = data.size < 2
+
+    fun HomeView.getDataList(): List<HomeData>? {
+        return when(this) {
+            is HomeView.HomeQuickLink  -> this.dataList
+            is HomeView.HomeBanner -> this.dataList
+            is HomeView.HomeFlashDeal -> this.dataList
+        }
+    }
 
     companion object {
         const val POSITION_BANNER = 0
