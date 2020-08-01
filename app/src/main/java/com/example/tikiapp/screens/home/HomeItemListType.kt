@@ -4,5 +4,6 @@ enum class HomeItemListType {
     BANNER,
     QUICKLINK,
     FLASHDEAL,
+    LOADING,
     OTHER
 }

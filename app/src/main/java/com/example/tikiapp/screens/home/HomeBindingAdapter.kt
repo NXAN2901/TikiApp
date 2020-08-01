@@ -1,31 +1,29 @@
 package com.example.tikiapp.screens.home
 
-import android.util.Log
 import androidx.databinding.BindingAdapter
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tikiapp.screens.home.content.HomeContentAdapter
+import com.example.tikiapp.screens.home.models.HomeView
 
-@BindingAdapter("homeData")
+@BindingAdapter(value = ["homeData", "isShowLoading"], requireAll = false)
 fun homeData(
     recyclerview: RecyclerView,
-    homeData: MutableLiveData<List<HomeDataModel>>?
+    homeData: MutableLiveData<List<HomeView>>?,
+    isShowLoading: ObservableBoolean
 ) {
-    Log.e("ANNX", "BindingAdapter homeData $homeData")
-    if (homeData == null) {
-        return
-    }
-
     if (recyclerview.adapter == null) {
         recyclerview.apply {
             adapter = HomeContentAdapter()
-            layoutManager = LinearLayoutManager(recyclerview.context)
+            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         }
     }
 
     (recyclerview.adapter as HomeContentAdapter).apply {
-        homeData.value?.let {
+        showLoading(isShowLoading.get())
+        homeData?.value?.let {
             setHomeData(it)
         }
     }

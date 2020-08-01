@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             homeData="@{viewModel.homeLiveData}"
+            isShowLoading="@{viewModel.isShowLoading()}"
             android:layout_marginTop="140dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@id/headerView" />

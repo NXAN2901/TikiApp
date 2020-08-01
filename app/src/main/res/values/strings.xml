@@ -2,4 +2,6 @@
     <string name="app_name">TikiApp</string>
     <string name="search_hint">Bạn tìm gì hôm nay..</string>
     <string name="flashdeal_discount_percent_format">-%d%%</string>
+    <string name="flashdeal_sold_count">Đã bán %d</string>
+    <string name="flashdeal_price">%s đ</string>
 </resources>

@@ -3,15 +3,23 @@ package com.example.tikiapp.screens.home.content
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tikiapp.screens.home.HomeDataModel
 import com.example.tikiapp.screens.home.HomeItemListType
+import com.example.tikiapp.screens.home.models.HomeView
 import com.example.tikiapp.utils.BaseViewItem
 
-class HomeContentAdapter(private var homeDataModels: List<HomeDataModel> = ArrayList()) :
-    RecyclerView.Adapter<CommonContentVH<HomeDataModel>>() {
+class HomeContentAdapter(
+    private var homeViews: List<HomeView> = ArrayList(),
+    private var showLoading: Boolean = false
+) :
+    RecyclerView.Adapter<CommonContentVH<HomeView>>() {
 
-    fun setHomeData(newHomeDataList: List<HomeDataModel>) {
-        homeDataModels = newHomeDataList
+    fun showLoading(isShowLoading: Boolean) {
+        showLoading = isShowLoading
+        notifyDataSetChanged()
+    }
+
+    fun setHomeData(newHomeDataList: List<HomeView>) {
+        homeViews = newHomeDataList
         notifyDataSetChanged()
     }
 
@@ -19,43 +27,68 @@ class HomeContentAdapter(private var homeDataModels: List<HomeDataModel> = Array
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CommonContentVH<HomeDataModel> {
+    ): CommonContentVH<HomeView> {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            HomeItemListType.QUICKLINK.ordinal -> CommonContentVH(QuickLinkContentItemView(layoutInflater, parent))
-            HomeItemListType.BANNER.ordinal -> CommonContentVH(BannerContentItemView(layoutInflater, parent))
-            HomeItemListType.FLASHDEAL.ordinal -> CommonContentVH(FlashDealContentItemView(layoutInflater, parent))
+            HomeItemListType.QUICKLINK.ordinal -> CommonContentVH(
+                QuickLinkContentItemView(
+                    layoutInflater,
+                    parent
+                )
+            )
+            HomeItemListType.BANNER.ordinal -> CommonContentVH(
+                BannerContentItemView(
+                    layoutInflater,
+                    parent
+                )
+            )
+            HomeItemListType.FLASHDEAL.ordinal -> CommonContentVH(
+                FlashDealContentItemView(
+                    layoutInflater,
+                    parent
+                )
+            )
+            HomeItemListType.LOADING.ordinal -> CommonContentVH(
+                LoadingContentItemView(
+                    layoutInflater,
+                    parent
+                )
+            )
             else -> throw RuntimeException("Unknown Home Content ViewType")
-        } as CommonContentVH<HomeDataModel>
+        } as CommonContentVH<HomeView>
     }
 
     override fun getItemCount(): Int {
-        return homeDataModels.size
+        return if (showLoading) homeViews.size + 1 else homeViews.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item: HomeDataModel = homeDataModels[position]
+        if (position == homeViews.size) {
+            return HomeItemListType.LOADING.ordinal
+        }
+        val item: HomeView = homeViews[position]
         return item.getViewType().ordinal
     }
 
-    override fun onBindViewHolder(holder: CommonContentVH<HomeDataModel>, position: Int) {
-        holder.bind(homeDataModels[position])
-
+    override fun onBindViewHolder(holder: CommonContentVH<HomeView>, position: Int) {
+        if (position < homeViews.size) {
+            holder.bind(homeViews[position])
+        }
     }
 
 }
 
-fun HomeDataModel.getViewType(): HomeItemListType {
+fun HomeView.getViewType(): HomeItemListType {
     return when (this) {
-        is HomeDataModel.HomeBanner -> HomeItemListType.BANNER
-        is HomeDataModel.HomeQuickLink -> HomeItemListType.QUICKLINK
-        is HomeDataModel.HomeFlashDeal -> HomeItemListType.FLASHDEAL
+        is HomeView.HomeBanner -> HomeItemListType.BANNER
+        is HomeView.HomeQuickLink -> HomeItemListType.QUICKLINK
+        is HomeView.HomeFlashDeal -> HomeItemListType.FLASHDEAL
     }
 }
 
-class CommonContentVH<T: HomeDataModel>(private val baseViewItem: BaseViewItem<T>): RecyclerView.ViewHolder(baseViewItem.view) {
-    fun  bind(item: T) {
+class CommonContentVH<T : HomeView>(private val baseViewItem: BaseViewItem<T>) :
+    RecyclerView.ViewHolder(baseViewItem.view) {
+    fun bind(item: T) {
         baseViewItem.bind(item)
     }
 }
-

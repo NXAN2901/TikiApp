@@ -6,17 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.example.tikiapp.R
-import com.example.tikiapp.screens.home.HomeDataModel
 import com.example.tikiapp.screens.home.banner.BannerAdapter
 import com.example.tikiapp.screens.home.banner.BannerIndicator
+import com.example.tikiapp.screens.home.models.HomeView
 import com.example.tikiapp.utils.BaseViewItem
 import com.example.tikiapp.views.AutoSwipeRecyclerview
 
 class BannerContentItemView(inflater: LayoutInflater, parentView: ViewGroup?) :
-    BaseViewItem<HomeDataModel.HomeBanner> {
+    BaseViewItem<HomeView.HomeBanner> {
     override val view: View = inflater.inflate(R.layout.home_content_banner, parentView, false)
 
-    override fun bind(item: HomeDataModel.HomeBanner) {
+    override fun bind(item: HomeView.HomeBanner) {
         val dataList = item.dataList
         if (dataList.isNullOrEmpty()) {
             view.visibility = View.GONE

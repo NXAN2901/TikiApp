@@ -3,17 +3,17 @@ package com.example.tikiapp.screens.home.banner
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tikiapp.common.domain.entity.Banner
+import com.example.tikiapp.screens.home.models.HomeData
 import com.example.tikiapp.utils.BaseViewItem
 
 class BannerAdapter(
-    private var banners: List<Banner> = ArrayList()
+    private var banners: List<HomeData.BannerModel> = ArrayList()
 ) : RecyclerView.Adapter<BannerVH>() {
 
     val realItemCount
         get() = banners.size
 
-    fun setBanner(newBanners: List<Banner>) {
+    fun setBanner(newBanners: List<HomeData.BannerModel>) {
         banners = newBanners
         notifyDataSetChanged()
     }
@@ -32,10 +32,10 @@ class BannerAdapter(
 
 }
 
-class BannerVH(private val baseViewItem: BaseViewItem<Banner>) :
+class BannerVH(private val baseViewItem: BaseViewItem<HomeData.BannerModel>) :
     RecyclerView.ViewHolder(baseViewItem.view) {
 
-    fun bindBanner(banner: Banner) {
+    fun bindBanner(banner: HomeData.BannerModel) {
         baseViewItem.bind(banner)
     }
 

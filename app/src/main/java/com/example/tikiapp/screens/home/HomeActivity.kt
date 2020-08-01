@@ -6,7 +6,7 @@ import com.example.tikiapp.databinding.ActivityHomeBinding
 import com.example.tikiapp.screens.base.BaseActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>() {
+class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), HomeNavigator {
 
     private val homeViewModel: HomeViewModel by viewModel()
 

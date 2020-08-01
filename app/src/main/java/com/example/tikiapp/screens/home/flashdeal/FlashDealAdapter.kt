@@ -1,17 +1,15 @@
 package com.example.tikiapp.screens.home.flashdeal
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tikiapp.common.domain.entity.FlashDeal
+import com.example.tikiapp.screens.home.models.HomeData
 import com.example.tikiapp.utils.BaseViewItem
 
-class FlashDealAdapter(private var flashDeals: List<FlashDeal> = ArrayList()) :
+class FlashDealAdapter(private var flashDeals: List<HomeData.FlashDealModel> = ArrayList()) :
     RecyclerView.Adapter<FlashDealVH>() {
 
-    fun setFlashDeals(newFlashDeal: List<FlashDeal>) {
-        Log.e("ANNX", "FlashDealAdapter bind $newFlashDeal")
+    fun setFlashDeals(newFlashDeal: List<HomeData.FlashDealModel>) {
         flashDeals = newFlashDeal
         notifyDataSetChanged()
     }
@@ -30,11 +28,10 @@ class FlashDealAdapter(private var flashDeals: List<FlashDeal> = ArrayList()) :
 
 }
 
-
-class FlashDealVH(private val baseViewItem: BaseViewItem<FlashDeal>) :
+class FlashDealVH(private val baseViewItem: BaseViewItem<HomeData.FlashDealModel>) :
     RecyclerView.ViewHolder(baseViewItem.view) {
 
-    fun bind(flashDeal: FlashDeal) {
+    fun bind(flashDeal: HomeData.FlashDealModel) {
         baseViewItem.bind(flashDeal)
     }
 }

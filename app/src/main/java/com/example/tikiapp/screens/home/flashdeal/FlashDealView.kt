@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tikiapp.R
-import com.example.tikiapp.common.domain.entity.FlashDeal
+import com.example.tikiapp.screens.home.models.HomeData
 
 class FlashDealView @JvmOverloads constructor(
     context: Context,
@@ -57,7 +57,7 @@ class FlashDealView @JvmOverloads constructor(
         tvFlashTitle.paint.shader = shader
     }
 
-    fun setFlashDeals(flashDeals: List<FlashDeal>) {
+    fun setFlashDeals(flashDeals: List<HomeData.FlashDealModel>) {
         if (rvFlashDeal.adapter == null) {
             rvFlashDeal.apply {
                 adapter = FlashDealAdapter()

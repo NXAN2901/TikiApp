@@ -3,14 +3,14 @@ package com.example.tikiapp.screens.home.quicklink
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tikiapp.common.domain.entity.QuickLink
+import com.example.tikiapp.screens.home.models.HomeData
 import com.example.tikiapp.utils.BaseViewItem
 
 class QuickLinkAdapter(
-    private var quickLinks: List<QuickLink> = ArrayList()
+    private var quickLinks: List<HomeData.QuickLinkModel> = ArrayList()
 ) : RecyclerView.Adapter<QuickLinkVH>() {
 
-    fun setQuickLinks(newQuickLinks: List<QuickLink>) {
+    fun setQuickLinks(newQuickLinks: List<HomeData.QuickLinkModel>) {
         quickLinks = newQuickLinks
         notifyDataSetChanged()
     }
@@ -29,10 +29,10 @@ class QuickLinkAdapter(
 
 }
 
-class QuickLinkVH(private val baseViewItem: BaseViewItem<QuickLink>) :
+class QuickLinkVH(private val baseViewItem: BaseViewItem<HomeData.QuickLinkModel>) :
     RecyclerView.ViewHolder(baseViewItem.view) {
 
-    fun bindQuickLink(quickLink: QuickLink) {
+    fun bindQuickLink(quickLink: HomeData.QuickLinkModel) {
         baseViewItem.bind(quickLink)
     }
 }

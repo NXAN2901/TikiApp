@@ -24,7 +24,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<out BaseNavig
     fun getDataBinding() = viewDataBinding
 
     protected open fun initBindingVariables() {
-        // override to execute binding here
+        // override to execute other binding here
     }
 
     private fun performDataBinding() {
