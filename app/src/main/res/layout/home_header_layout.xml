@@ -8,7 +8,7 @@
     android:minHeight="64dp"
     android:paddingHorizontal="10dp"
     app:layoutDescription="@xml/toolbar_home_header_scene"
-    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"

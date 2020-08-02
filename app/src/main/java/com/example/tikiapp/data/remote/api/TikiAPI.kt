@@ -6,17 +6,16 @@ import com.example.tikiapp.common.domain.entity.QuickLink
 import com.example.tikiapp.data.remote.api.response.BannerResponse
 import com.example.tikiapp.data.remote.api.response.FlashDealResponse
 import com.example.tikiapp.data.remote.api.response.QuickLinkResponse
-import retrofit2.Call
 import retrofit2.http.GET
 
 interface TikiAPI {
 
     @GET("v2/home/banners/v2")
-    fun fetchBanners(): Call<BannerResponse<ArrayList<Banner>>>
+    suspend fun fetchBanners(): BannerResponse<ArrayList<Banner>>
 
     @GET("shopping/v2/widgets/quick_link")
-    fun fetchQuickLinks(): Call<QuickLinkResponse<ArrayList<ArrayList<QuickLink>>>>
+    suspend fun fetchQuickLinks(): QuickLinkResponse<ArrayList<ArrayList<QuickLink>>>
 
     @GET("v2/widget/deals/hot")
-    fun fetchFlashDeal(): Call<FlashDealResponse<ArrayList<FlashDeal>>>
+    suspend fun fetchFlashDeal(): FlashDealResponse<ArrayList<FlashDeal>>
 }
